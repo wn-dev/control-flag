@@ -41,7 +41,7 @@ foreach(file ${files})
       tree-sitter
       tree-sitter-c
       tree-sitter-verilog
-      #[[pthread]])
+      pthread)
     foreach(part ${${file_without_ext}_parts})
       add_test(NAME ${file_without_ext}_${part} COMMAND ${file_without_ext} ${part} WORKING_DIRECTORY ${CTEST_BINARY_DIRECTORY})
       set_tests_properties(${file_without_ext}_${part}

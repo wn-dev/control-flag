@@ -27,7 +27,7 @@ set(COMMON_LINK_LIBRARIES
   tree-sitter
   tree-sitter-c
   tree-sitter-verilog
-#  pthread
+  pthread
 )
 
 add_library(cf_base
