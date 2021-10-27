@@ -28,7 +28,7 @@
 #include <memory>
 #include <exception>
 #include <iostream>
-#include <chrono>
+#include <chrono>  // NOLINT [build/c++11]
 
 #include "parser.h"
 

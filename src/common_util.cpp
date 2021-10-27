@@ -175,8 +175,9 @@ getopt(int argc, char* const* argv, const char* opts) {
             ERR(": option requires an argument -- ", c);
             sp = 1;
             return ('?');
-        } else
+        } else {
             optarg = argv[optind++];
+        }
         sp = 1;
     } else {
         if (argv[optind][++sp] == '\0') {
