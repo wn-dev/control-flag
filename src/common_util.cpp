@@ -135,7 +135,9 @@ void CollectCodeBlocksOfInterest<LANGUAGE_VERILOG>(const ManagedTSTree &,
 
 #ifdef _WIN32
 
-#define ERR(szz, czz) if (opterr) { fprintf(stderr, "%s%s%c\n", argv[0], szz, czz); }
+#define ERR(szz, czz) if (opterr) { \
+        fprintf(stderr, "%s%s%c\n", argv[0], szz, czz); \
+    }
 
 int opterr = 1;
 int optind = 1;
@@ -150,9 +152,9 @@ getopt(int argc, char* const* argv, const char* opts) {
 
     if (sp == 1) {
         if (optind >= argc ||
-            argv[optind][0] != '-' || argv[optind][1] == '\0')
+            argv[optind][0] != '-' || argv[optind][1] == '\0') {
             return (EOF);
-        else if (strcmp(argv[optind], "--") == 0) {
+        } else if (strcmp(argv[optind], "--") == 0) {
             optind++;
             return (EOF);
         }
@@ -167,14 +169,13 @@ getopt(int argc, char* const* argv, const char* opts) {
         return ('?');
     }
     if (*++cp == ':') {
-        if (argv[optind][sp + 1] != '\0')
+        if (argv[optind][sp + 1] != '\0') {
             optarg = &argv[optind++][sp + 1];
-        else if (++optind >= argc) {
+        } else if (++optind >= argc) {
             ERR(": option requires an argument -- ", c);
             sp = 1;
             return ('?');
-        }
-        else
+        } else
             optarg = argv[optind++];
         sp = 1;
     } else {

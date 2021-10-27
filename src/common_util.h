@@ -108,28 +108,29 @@ void CollectCodeBlocksOfInterest(const ManagedTSTree& tree,
 
 class Timer {
  public:
-    void StartTimer() {
-        start = std::chrono::high_resolution_clock::now();
-    }
+  void StartTimer() {
+    start = std::chrono::high_resolution_clock::now();
+  }
 
-    void StopTimer() {
-        stop = std::chrono::high_resolution_clock::now();
-    }
+  void StopTimer() {
+    stop = std::chrono::high_resolution_clock::now();
+  }
 
-    std::string TimerDiff() const {
-        auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-        std::ostringstream ret_string;
-        ret_string << (diff.count() / std::milli::den) << ".";
-        ret_string.width(3);
-        ret_string.fill('0');
-        // Print only 3 decimal points in millisecs.
-        ret_string << (diff.count() % std::milli::den);
-        return ret_string.str();
-    }
+  std::string TimerDiff() const {
+    auto diff =
+      std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    std::ostringstream ret_string;
+    ret_string << (diff.count() / std::milli::den) << ".";
+    ret_string.width(3);
+    ret_string.fill('0');
+    // Print only 3 decimal points in millisecs.
+    ret_string << (diff.count() % std::milli::den);
+    return ret_string.str();
+  }
 
  private:
-    std::chrono::steady_clock::time_point start;
-    std::chrono::steady_clock::time_point stop;
+  std::chrono::steady_clock::time_point start;
+  std::chrono::steady_clock::time_point stop;
 };
 
 #ifdef _WIN32
