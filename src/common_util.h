@@ -129,8 +129,8 @@ class Timer {
   }
 
  private:
-  std::chrono::steady_clock::time_point start;
-  std::chrono::steady_clock::time_point stop;
+  std::chrono::high_resolution_clock::time_point start;
+  std::chrono::high_resolution_clock::time_point stop;
 };
 
 #ifdef _WIN32
