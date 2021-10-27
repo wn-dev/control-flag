@@ -21,6 +21,10 @@
 #ifndef SRC_COMMON_UTIL_H_
 #define SRC_COMMON_UTIL_H_
 
+#ifndef _WIN32
+#include <unistd.h>
+#endif
+
 #include <tree_sitter/api.h>
 #include <string>
 #include <vector>
