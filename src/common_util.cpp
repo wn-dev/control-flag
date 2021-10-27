@@ -204,7 +204,7 @@ bool MakeTempFile(std::string& file_template) {
 #ifdef _WIN32
     if (_mktemp(path_buf.data()) != NULL) {
 #else
-    if (mkstemp(temporary_file) != -1) {
+    if (mkstemp(path_buf.data()) != -1) {
 #endif
         file_template = path_buf.data();
         return true;
