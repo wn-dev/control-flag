@@ -199,7 +199,8 @@ bool MakeTempFile(std::string& file_template) {
     // Get temp directory.
     auto path = std::filesystem::temp_directory_path() / file_template;
     std::vector<char> path_buf(path.string().length() + 1);
-    strcpy(path_buf.data(), path.string().c_str());
+    snprintf(path_buf.data(), path_buf.capacity(),
+        "%s", path.string().c_str());
 #ifdef _WIN32
     if (_mktemp(path_buf.data()) != NULL) {
 #else
