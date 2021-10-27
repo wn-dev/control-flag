@@ -144,4 +144,6 @@ extern int optind, opterr;
 int getopt(int argc, char* const* argv, const char* options);
 #endif
 
+bool MakeTempFile(std::string& file_template);
+
 #endif  // SRC_COMMON_UTIL_H_

@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -189,3 +190,24 @@ getopt(int argc, char* const* argv, const char* opts) {
     return (c);
 }
 #endif
+
+#ifdef _WIN32
+#include <io.h>
+#endif
+
+bool MakeTempFile(std::string& file_template) {
+    // Get temp directory.
+    auto path = std::filesystem::temp_directory_path() / file_template;
+    std::vector<char> path_buf(path.string().length() + 1);
+    strcpy(path_buf.data(), path.string().c_str());
+#ifdef _WIN32
+    if (_mktemp(path_buf.data()) != NULL) {
+#else
+    if (mkstemp(temporary_file) != -1) {
+#endif
+        file_template = path_buf.data();
+        return true;
+    } else {
+        return false;
+    }
+}

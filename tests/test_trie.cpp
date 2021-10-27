@@ -27,6 +27,7 @@ int mkstemp(char* template_name) {
 }
 #endif
 #include <string>
+#include <filesystem>
 
 #include "trie.h"
 #include "test_common.h"
@@ -36,8 +37,8 @@ namespace {
 template <TreeLevel L>
 TestResult BuildTrie(const std::string& training_data, Trie& trie) {
   try {
-    char temporary_file[] = "/tmp/test_trie_build.XXXXXX";
-    if (mkstemp(temporary_file) == -1)
+    std::string temporary_file = "test_trie_build.XXXXXX";
+    if (!MakeTempFile(temporary_file))
       return TEST_FAILURE;
 
     std::ofstream stream(temporary_file);
@@ -47,7 +48,7 @@ TestResult BuildTrie(const std::string& training_data, Trie& trie) {
     stream.close();
 
     trie.Build<L>(temporary_file);
-    remove(temporary_file);
+    std::filesystem::remove(temporary_file);
     return TEST_SUCCESS;
   } catch(std::exception& e) {
     return TEST_FAILURE;
