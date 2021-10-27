@@ -22,7 +22,9 @@
 #include <unistd.h>
 #else
 #include <io.h>
-int mkstemp(char* template_name) { return _mktemp(template_name) == NULL ? -1 : 0; }
+int mkstemp(char* template_name) {
+    return _mktemp(template_name) == NULL ? -1 : 0;
+}
 #endif
 #include <string>
 

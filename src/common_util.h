@@ -107,7 +107,7 @@ void CollectCodeBlocksOfInterest(const ManagedTSTree& tree,
 // A simple millisec precision timer for profiling
 
 class Timer {
-public:
+ public:
     void StartTimer() {
         start = std::chrono::high_resolution_clock::now();
     }
@@ -127,7 +127,7 @@ public:
         return ret_string.str();
     }
 
-private:
+ private:
     std::chrono::steady_clock::time_point start;
     std::chrono::steady_clock::time_point stop;
 };

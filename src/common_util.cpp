@@ -135,7 +135,7 @@ void CollectCodeBlocksOfInterest<LANGUAGE_VERILOG>(const ManagedTSTree &,
 
 #ifdef _WIN32
 
-#define ERR(szz,czz) if(opterr){fprintf(stderr,"%s%s%c\n",argv[0],szz,czz);}
+#define ERR(szz, czz) if (opterr) { fprintf(stderr, "%s%s%c\n", argv[0], szz, czz); }
 
 int opterr = 1;
 int optind = 1;
@@ -143,8 +143,7 @@ int optopt;
 char* optarg;
 
 int
-getopt(int argc, char* const* argv, const char* opts)
-{
+getopt(int argc, char* const* argv, const char* opts) {
     static int sp = 1;
     int c;
     const char* cp;
@@ -178,8 +177,7 @@ getopt(int argc, char* const* argv, const char* opts)
         else
             optarg = argv[optind++];
         sp = 1;
-    }
-    else {
+    } else {
         if (argv[optind][++sp] == '\0') {
             sp = 1;
             optind++;
