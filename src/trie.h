@@ -21,8 +21,6 @@
 #ifndef SRC_TRIE_H_
 #define SRC_TRIE_H_
 
-#include <unistd.h>
-
 #include <fstream>
 #include <functional>
 #include <iostream>

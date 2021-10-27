@@ -18,7 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef _WIN32
 #include <unistd.h>
+#else
+#include <io.h>
+int mkstemp(char* template_name) { return _mktemp(template_name) == NULL ? -1 : 0; }
+#endif
 #include <string>
 
 #include "trie.h"

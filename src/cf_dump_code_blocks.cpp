@@ -18,7 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <iostream>
 #include <fstream>
 #include <sstream>

@@ -21,7 +21,6 @@
 #ifndef SRC_COMMON_UTIL_H_
 #define SRC_COMMON_UTIL_H_
 
-#include <sys/time.h>
 #include <tree_sitter/api.h>
 #include <string>
 #include <vector>
@@ -29,6 +28,7 @@
 #include <memory>
 #include <exception>
 #include <iostream>
+#include <chrono>
 
 #include "parser.h"
 
@@ -104,47 +104,39 @@ void CollectCodeBlocksOfInterest(const ManagedTSTree& tree,
                                  code_blocks_t& code_blocks);
 
 //----------------------------------------------------------------------------
-// A simple microsec precisoon timer for profiling
+// A simple millisec precision timer for profiling
 
 class Timer {
- public:
-  inline int StartTimer() {
-    struct timezone *tz = NULL;
-    return gettimeofday(&start_tv_, tz);
-  }
+public:
+    void StartTimer() {
+        start = std::chrono::high_resolution_clock::now();
+    }
 
-  inline int StopTimer() {
-    struct timezone *tz = NULL;
-    return gettimeofday(&end_tv_, tz);
-  }
+    void StopTimer() {
+        stop = std::chrono::high_resolution_clock::now();
+    }
 
-  inline struct timeval TimerDiffToTimeval() const {
-    static const suseconds_t kMicroSecs = 1000000;
-    auto timeval2microsec = [&](const struct timeval& tv) {
-      return tv.tv_sec * kMicroSecs + tv.tv_usec;
-    };
+    std::string TimerDiff() const {
+        auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+        std::ostringstream ret_string;
+        ret_string << (diff.count() / std::milli::den) << ".";
+        ret_string.width(3);
+        ret_string.fill('0');
+        // Print only 3 decimal points in millisecs.
+        ret_string << (diff.count() % std::milli::den);
+        return ret_string.str();
+    }
 
-    suseconds_t diff_microsec = timeval2microsec(end_tv_) -
-                                timeval2microsec(start_tv_);
-    struct timeval diff_tv = {.tv_sec = diff_microsec / kMicroSecs,
-                              .tv_usec = diff_microsec % kMicroSecs};
-    return diff_tv;
-  }
-
-  inline std::string TimerDiff() const {
-    struct timeval diff_tv = TimerDiffToTimeval();
-    std::ostringstream ret_string;
-    ret_string << diff_tv.tv_sec << ".";
-    ret_string.width(3);
-    ret_string.fill('0');
-    // Print only 3 decimal points in millisecs.
-    ret_string << diff_tv.tv_usec / 1000;
-    return ret_string.str();
-  }
-
- private:
-    struct timeval start_tv_;
-    struct timeval end_tv_;
+private:
+    std::chrono::steady_clock::time_point start;
+    std::chrono::steady_clock::time_point stop;
 };
+
+#ifdef _WIN32
+extern char* optarg;
+extern int optind, opterr;
+
+int getopt(int argc, char* const* argv, const char* options);
+#endif
 
 #endif  // SRC_COMMON_UTIL_H_
