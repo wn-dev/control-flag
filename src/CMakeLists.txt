@@ -27,7 +27,7 @@ set(COMMON_LINK_LIBRARIES
   tree-sitter
   tree-sitter-c
   tree-sitter-verilog
-  pthread
+  $<$<PLATFORM_ID:Linux>:pthread>
 )
 
 add_library(cf_base
@@ -37,7 +37,7 @@ add_library(cf_base
   trie.cpp
   result_processing.cpp
   autocorrect.cpp
-) 
+)
 target_include_directories(cf_base ${COMMON_INCLUDES})
 
 add_executable(cf_file_scanner cf_file_scanner.cpp)
